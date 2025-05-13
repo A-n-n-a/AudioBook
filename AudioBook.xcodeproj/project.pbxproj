@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		95FCB1C02DD3943900FF4029 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 95FCB1BF2DD3943900FF4029 /* ComposableArchitecture */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		95FCB19D2DD381D000FF4029 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95FCB1C02DD3943900FF4029 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 				95FCB18E2DD381CF00FF4029 /* AudioBook */,
 				95FCB19F2DD381D000FF4029 /* AudioBookTests */,
 				95FCB1A92DD381D000FF4029 /* AudioBookUITests */,
+				95FCB1BE2DD3943900FF4029 /* Frameworks */,
 				95FCB18D2DD381CF00FF4029 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +96,13 @@
 				95FCB1A62DD381D000FF4029 /* AudioBookUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		95FCB1BE2DD3943900FF4029 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +125,7 @@
 			);
 			name = AudioBook;
 			packageProductDependencies = (
+				95FCB1BF2DD3943900FF4029 /* ComposableArchitecture */,
 			);
 			productName = AudioBook;
 			productReference = 95FCB18C2DD381CF00FF4029 /* AudioBook.app */;
@@ -195,6 +209,9 @@
 			);
 			mainGroup = 95FCB1832DD381CE00FF4029;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				95FCB1BD2DD3941000FF4029 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 95FCB18D2DD381CF00FF4029 /* Products */;
 			projectDirPath = "";
@@ -558,6 +575,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		95FCB1BD2DD3941000FF4029 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.19.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		95FCB1BF2DD3943900FF4029 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 95FCB1BD2DD3941000FF4029 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 95FCB1842DD381CE00FF4029 /* Project object */;
 }

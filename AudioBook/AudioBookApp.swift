@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct AudioBookApp: App {
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppView(
+                store: .init(
+                    initialState: .initial,
+                    reducer: AppFeature.init
+                )
+            )
         }
     }
 }
