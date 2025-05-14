@@ -23,7 +23,6 @@ public class AudioPlayerService: AudioPlayerServiceProtocol {
     private var timerSubject = PassthroughSubject<TimeInterval, Never>()
     private let fileExtension = "mp3"
     private var timer: Timer?
-    var time: TimeInterval = 0
 
     init(fileName: String) {
         if
@@ -35,12 +34,12 @@ public class AudioPlayerService: AudioPlayerServiceProtocol {
 
     public func play() {
         player?.play()
-        timer?.fire()
+        startTimer()
     }
 
     public func pause() {
         player?.pause()
-        timer?.invalidate()
+        stopTimer()
     }
 
     public func seek(by seconds: TimeInterval) {
@@ -53,13 +52,20 @@ public class AudioPlayerService: AudioPlayerServiceProtocol {
 
     public func timerPublisher() -> AsyncStream<TimeInterval> {
         AsyncStream { continuation in
-            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-                print("[timer]",self.player?.currentTime ?? 0)
-                continuation.yield(self.player?.currentTime ?? 0)
+            DispatchQueue.main.async {
+                self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+                    continuation.yield(self.player?.currentTime ?? 0)
+                }
+                RunLoop.current.add(self.timer!, forMode: .common)
             }
-            RunLoop.current.add(timer!, forMode: .common)
-             
         }
     }
     
+    private func startTimer() {
+        timer?.fire()
+    }
+    
+    private func stopTimer() {
+        timer?.invalidate()
+    }
 }

@@ -39,7 +39,6 @@ public struct AudioPlayerFeature: Reducer {
             state.duration = environment.audioPlayerService.duration()
             return .run { send in
                 for await time in environment.audioPlayerService.timerPublisher() {
-                    //TODO: update time
                     await send(.updateTime(time))
                 }
             }
