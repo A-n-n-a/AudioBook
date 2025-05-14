@@ -19,8 +19,9 @@ public struct AudioPlayerFeature: Reducer {
         var isPlaying = false
         var currentTime: TimeInterval = 0
         var duration: TimeInterval = 0
+        var rate: Float = 1
     }
-
+    
     @CasePathable
     public enum Action: Equatable {
         case onAppear
@@ -31,8 +32,9 @@ public struct AudioPlayerFeature: Reducer {
         case nextTapped
         case previousTapped
         case audioFinished
+        case changeRate(Float)
     }
-
+    
     public func reduce(into state: inout AudioPlayerFeature.State, action: AudioPlayerFeature.Action) -> Effect<AudioPlayerFeature.Action> {
         switch action {
         case .onAppear:
@@ -76,6 +78,11 @@ public struct AudioPlayerFeature: Reducer {
             
         case .previousTapped:
             //TODO: switch to the previous chapter
+            return .none
+            
+        case let .changeRate(rate):
+            environment.audioPlayerService.setRate(rate: rate)
+            state.rate = rate
             return .none
         }
     }

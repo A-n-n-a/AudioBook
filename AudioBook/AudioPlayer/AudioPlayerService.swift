@@ -15,7 +15,8 @@ public protocol AudioPlayerServiceProtocol {
     func pause()
     func seek(by seconds: TimeInterval)
     func duration() -> TimeInterval
-    func timerPublisher() -> AsyncStream<TimeInterval> 
+    func setRate(rate: Float)
+    func timerPublisher() -> AsyncStream<TimeInterval>
 }
 
 public class AudioPlayerService: AudioPlayerServiceProtocol {
@@ -29,6 +30,7 @@ public class AudioPlayerService: AudioPlayerServiceProtocol {
             let url = Bundle.main.url(forResource: fileName, withExtension: fileExtension),
             let player = try? AVAudioPlayer(contentsOf: url) {
             self.player = player
+            self.player?.enableRate = true
         }
     }
 
@@ -48,6 +50,10 @@ public class AudioPlayerService: AudioPlayerServiceProtocol {
 
     public func duration() -> TimeInterval {
         player?.duration ?? 0
+    }
+    
+    public func setRate(rate: Float) {
+        player?.rate = rate
     }
 
     public func timerPublisher() -> AsyncStream<TimeInterval> {

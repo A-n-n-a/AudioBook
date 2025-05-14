@@ -19,11 +19,11 @@ public struct AppFeature: Reducer {
 
         var path: [Route] = []
         var audioPlayerState: AudioPlayerFeature.State
-        var detailsState: DetailsFeature.State?
+        var detailsState: DetailsFeature.State
 
         static let initial: Self = .init(
             audioPlayerState: AudioPlayerFeature.State(),
-            detailsState: .none
+            detailsState: DetailsFeature.State(text: "Lorem Ipsum...")
         )
     }
 

@@ -10,39 +10,106 @@ import ComposableArchitecture
 
 struct AppView: View {
     let store: StoreOf<AppFeature>
+    @State var selectedTab: Tab = .player
     
     var body: some View {
         WithViewStore(self.store, observe: { $0 }, removeDuplicates: ==) { viewStore in
+            //TODO: check path
             NavigationStack(
                 path: viewStore.binding(
                     get: \.path,
                     send: .path([])
                 )
             ) {
-                AudioPlayerView(
-                    store: store.scope(
-                        state: \.audioPlayerState,
-                        action: \.player
-                    )
-                )
-                .navigationBarHidden(false)
-                .onAppear {
-                    viewStore.start()
+                ZStack(alignment: .bottom) {
+                    
+                    content(viewStore: viewStore)
+                    tabBar
                 }
-                .navigationDestination(for: AppFeature.State.Route.self) { route in
-                    switch route {
-                    case .details:
+            }
 
-                        EmptyView()
+        }
+    }
+    
+    private func content(viewStore: ViewStoreOf<AppFeature>) -> some View {
+        TabView(selection: $selectedTab) {
+            AudioPlayerView(
+                store: store.scope(
+                    state: \.audioPlayerState,
+                    action: \.player
+                )
+            )
+            .onAppear {
+                viewStore.start()
+            }
+            .tag(Tab.player)
+
+            DetailsView(
+                store: store.scope(
+                    state: \.detailsState,
+                    action: \.details
+                )
+            )
+            .tag(Tab.details)
+        }
+    }
+    
+    private var tabBar: some View {
+        ZStack {
+            HStack {
+                ForEach(Tab.allCases, id: \.self) { tab in
+                    Button {
+                        selectedTab = tab
+                        triggerHapticFeedback()
+                    } label: {
+                        CustomTabItem(
+                            imageName: tab.iconName,
+                            isActive: selectedTab == tab
+                        )
                     }
                 }
             }
+            .padding(6)
+            .padding(.horizontal, 12)
         }
+        .frame(height: 70)
+        .background(.yellow)
+        .cornerRadius(35)
     }
 }
 
 fileprivate extension ViewStore<AppFeature.State, AppFeature.Action> {
     func start() {
         send(.player(AudioPlayerFeature.Action.onAppear))
+    }
+}
+
+extension AppView{
+    func CustomTabItem(imageName: String,  isActive: Bool) -> some View{
+        HStack(spacing: 10){
+            Spacer()
+            Image(systemName: imageName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 24, height: 24)
+            Spacer()
+        }
+        .frame(width: 65, height: 50)
+        .background(isActive ? .green: .clear)
+        .cornerRadius(30)
+    }
+}
+
+enum Tab: CaseIterable {
+    case player
+    case details
+    
+    var iconName: String{
+        switch self {
+        case .player:
+            return "headphones"
+        case .details:
+            return "text.alignleft"
+        }
     }
 }

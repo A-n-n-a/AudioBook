@@ -12,10 +12,10 @@ import ComposableArchitecture
 public struct DetailsFeature: Reducer {
     //MARK: - State
     public struct State: Equatable {
-        private let post: String
+        private let text: String
 
-        public init(post: String) {
-            self.post = post
+        public init(text: String) {
+            self.text = text
         }
 
         var title: String {
@@ -36,6 +36,7 @@ public struct DetailsFeature: Reducer {
     }
 
     //MARK: - Action
+    @CasePathable
     public enum Action: Equatable {}
 
     //MARK: - Reducer
