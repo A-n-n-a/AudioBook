@@ -19,16 +19,37 @@ struct AudioPlayerView: View {
                 Text("Time: \(formatTime(viewStore.currentTime)) / \(formatTime(viewStore.duration))")
 
                 HStack {
-                    Button("⏪ 15s") {
+                    
+                    Button {
+                        appStore.send(.previousChapterTapped)
+                    } label: {
+                        Image(systemName: "backward.end.fill")
+                            .font(.title)
+                    }
+                    
+                    Button {
                         viewStore.send(.backwardTapped)
+                    } label: {
+                        Image(systemName: "5.arrow.trianglehead.counterclockwise")
                     }
 
-                    Button(viewStore.isPlaying ? "⏸ Pause" : "▶️ Play") {
+                    Button() {
                         viewStore.send(.playPauseTapped)
+                    } label: {
+                        viewStore.isPlaying ? Image(systemName: "pause.fill") : Image(systemName: "playpause.fill")
                     }
 
-                    Button("15s ⏩") {
+                    Button {
                         viewStore.send(.forwardTapped)
+                    } label: {
+                        Image(systemName: "10.arrow.trianglehead.clockwise")
+                    }
+                    
+                    Button {
+                        appStore.send(.nextChapterTapped)
+                    } label: {
+                        Image(systemName: "forward.end.fill")
+                            .font(.title)
                     }
                 }
             }

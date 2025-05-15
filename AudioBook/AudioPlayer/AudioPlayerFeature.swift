@@ -12,10 +12,15 @@ import AVFoundation
 public struct AudioPlayerFeature: Reducer {
     
     private let environment: AudioPlayerEnvironment = .init(
-        audioPlayerService: AudioPlayerService(fileName: "Guide Dog at Work")
+        audioPlayerService: AudioPlayerService(chapter: Chapter(id: UUID(), title: "", fileName: "", fileExtension: "mp3"))
     )
     
     public struct State: Equatable {
+        
+//        static var current: AudioPlayerFeature.State {
+//            appStore.audioPlayerState
+//        }
+        
         var isPlaying = false
         var currentTime: TimeInterval = 0
         var duration: TimeInterval = 0
@@ -29,8 +34,8 @@ public struct AudioPlayerFeature: Reducer {
         case updateTime(TimeInterval)
         case forwardTapped
         case backwardTapped
-        case nextTapped
-        case previousTapped
+        case nextTapped(Chapter?)
+        case previousTapped(Chapter?)
         case audioFinished
         case changeRate(Float)
     }
@@ -72,12 +77,18 @@ public struct AudioPlayerFeature: Reducer {
             state.isPlaying = false
             return .none
             
-        case .nextTapped:
-            //TODO: switch to next chapter
+        case .nextTapped(let chapter):
+            if let chapter {
+                environment.audioPlayerService.switchToChapter(chapter)
+                state.isPlaying = true
+            }
             return .none
             
-        case .previousTapped:
-            //TODO: switch to the previous chapter
+        case .previousTapped(let chapter):
+            if let chapter {
+                environment.audioPlayerService.switchToChapter(chapter)
+                state.isPlaying = true
+            }
             return .none
             
         case let .changeRate(rate):

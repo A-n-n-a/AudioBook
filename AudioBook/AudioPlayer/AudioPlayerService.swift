@@ -17,17 +17,17 @@ public protocol AudioPlayerServiceProtocol {
     func duration() -> TimeInterval
     func setRate(rate: Float)
     func timerPublisher() -> AsyncStream<TimeInterval>
+    func switchToChapter(_ chapter: Chapter)
 }
 
 public class AudioPlayerService: AudioPlayerServiceProtocol {
     private var player: AVAudioPlayer?
     private var timerSubject = PassthroughSubject<TimeInterval, Never>()
-    private let fileExtension = "mp3"
     private var timer: Timer?
 
-    init(fileName: String) {
+    init(chapter: Chapter) {
         if
-            let url = Bundle.main.url(forResource: fileName, withExtension: fileExtension),
+            let url = Bundle.main.url(forResource: chapter.fileName, withExtension: chapter.fileExtension),
             let player = try? AVAudioPlayer(contentsOf: url) {
             self.player = player
             self.player?.enableRate = true
@@ -54,6 +54,14 @@ public class AudioPlayerService: AudioPlayerServiceProtocol {
     
     public func setRate(rate: Float) {
         player?.rate = rate
+    }
+    
+    public func switchToChapter(_ chapter: Chapter) {
+        if let url = Bundle.main.url(forResource: chapter.fileName, withExtension: chapter.fileExtension),
+           let player = try? AVAudioPlayer(contentsOf: url) {
+            self.player = player
+            self.player?.play()
+        }
     }
 
     public func timerPublisher() -> AsyncStream<TimeInterval> {

@@ -14,20 +14,16 @@ struct AppView: View {
     
     var body: some View {
         WithViewStore(self.store, observe: { $0 }, removeDuplicates: ==) { viewStore in
-            //TODO: check path
-            NavigationStack(
-                path: viewStore.binding(
-                    get: \.path,
-                    send: .path([])
-                )
-            ) {
+            
+            NavigationStack {
                 ZStack(alignment: .bottom) {
-                    
                     content(viewStore: viewStore)
                     tabBar
                 }
             }
-
+            .onAppear {
+                viewStore.send(.library(.onAppear))
+            }
         }
     }
     
@@ -84,6 +80,7 @@ fileprivate extension ViewStore<AppFeature.State, AppFeature.Action> {
     }
 }
 
+//TODO: CustomView
 extension AppView{
     func CustomTabItem(imageName: String,  isActive: Bool) -> some View{
         HStack(spacing: 10){
