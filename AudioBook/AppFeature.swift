@@ -14,11 +14,7 @@ public struct AppFeature: Reducer {
     
     //MARK: - State
     public struct State: Equatable {
-        public enum Route: Hashable {
-            case details
-        }
-//TODO: check path
-        var path: [Route] = []
+
         var libraryState: LibraryFeature.State
         var audioPlayerState: AudioPlayerFeature.State
         var detailsState: DetailsFeature.State
@@ -36,6 +32,7 @@ public struct AppFeature: Reducer {
         case library(LibraryFeature.Action)
         case player(AudioPlayerFeature.Action)
         case details(DetailsFeature.Action)
+        case setUpLibraryAndPlayer
         case nextChapterTapped
         case previousChapterTapped
     }
@@ -44,19 +41,43 @@ public struct AppFeature: Reducer {
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
+            case .setUpLibraryAndPlayer:
+                let book = state.libraryState.currentBook
+                return .send(.player(.setFirstBookToPlayer(book)))
             case .previousChapterTapped:
                 let previousChapter = state.libraryState.previousChapter
-                return .concatenate(
-                    .send(.library(.selectPrevious)),
-                    .send(.player(.previousTapped(previousChapter)))
-                )
+                print("[Chapter]", previousChapter?.fileName ?? "nil")
+                if
+                    state.libraryState.isFirstChapterInBook,
+                    let previousBook = state.libraryState.previousBook {
+                    return .concatenate(
+                        .send(.library(.selectPrevious)),
+                        .send(.player(.previousTapped(previousChapter))),
+                        .send(.player(.updateBookImage(previousBook.imageName)))
+                    )
+                } else {
+                    return .concatenate(
+                        .send(.library(.selectPrevious)),
+                        .send(.player(.previousTapped(previousChapter)))
+                    )
+                }
             case .nextChapterTapped:
                 let nextChapter = state.libraryState.nextChapter
                 print("[Chapter]", nextChapter?.fileName ?? "nil")
-                return .concatenate(
-                    .send(.library(.selectNext)),
-                    .send(.player(.nextTapped(nextChapter)))
-                )
+                if
+                    state.libraryState.isLastChapterInBook,
+                    let nextBook = state.libraryState.nextBook {
+                    return .concatenate(
+                        .send(.library(.selectNext)),
+                        .send(.player(.nextTapped(nextChapter))),
+                        .send(.player(.updateBookImage(nextBook.imageName)))
+                    )
+                } else {
+                    return .concatenate(
+                        .send(.library(.selectNext)),
+                        .send(.player(.nextTapped(nextChapter)))
+                    )
+                }
             default:
                 return .none
             }

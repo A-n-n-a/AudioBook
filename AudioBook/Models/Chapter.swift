@@ -12,4 +12,5 @@ public struct Chapter: Equatable, Identifiable {
     let title: String
     let fileName: String
     let fileExtension: String
+    let description: String?
 }

@@ -17,7 +17,7 @@ public protocol AudioPlayerServiceProtocol {
     func duration() -> TimeInterval
     func setRate(rate: Float)
     func timerPublisher() -> AsyncStream<TimeInterval>
-    func switchToChapter(_ chapter: Chapter)
+    func switchToChapter(_ chapter: Chapter, play: Bool)
 }
 
 public class AudioPlayerService: AudioPlayerServiceProtocol {
@@ -25,14 +25,7 @@ public class AudioPlayerService: AudioPlayerServiceProtocol {
     private var timerSubject = PassthroughSubject<TimeInterval, Never>()
     private var timer: Timer?
 
-    init(chapter: Chapter) {
-        if
-            let url = Bundle.main.url(forResource: chapter.fileName, withExtension: chapter.fileExtension),
-            let player = try? AVAudioPlayer(contentsOf: url) {
-            self.player = player
-            self.player?.enableRate = true
-        }
-    }
+    init() {}
 
     public func play() {
         player?.play()
@@ -56,10 +49,9 @@ public class AudioPlayerService: AudioPlayerServiceProtocol {
         player?.rate = rate
     }
     
-    public func switchToChapter(_ chapter: Chapter) {
-        if let url = Bundle.main.url(forResource: chapter.fileName, withExtension: chapter.fileExtension),
-           let player = try? AVAudioPlayer(contentsOf: url) {
-            self.player = player
+    public func switchToChapter(_ chapter: Chapter, play: Bool) {
+        setChapter(chapter)
+        if play {
             self.player?.play()
         }
     }
@@ -81,5 +73,14 @@ public class AudioPlayerService: AudioPlayerServiceProtocol {
     
     private func stopTimer() {
         timer?.invalidate()
+    }
+    
+    private func setChapter(_ chapter: Chapter) {
+        if
+            let url = Bundle.main.url(forResource: chapter.fileName, withExtension: chapter.fileExtension),
+            let player = try? AVAudioPlayer(contentsOf: url) {
+            self.player = player
+            self.player?.enableRate = true
+        }
     }
 }

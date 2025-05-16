@@ -16,6 +16,12 @@ struct AudioPlayerView: View {
         WithViewStore(self.store, observe: { $0 }, removeDuplicates: ==) { viewStore in
             
             VStack(spacing: 20) {
+                
+                Image(viewStore.bookImageName ?? "placeholder")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 200)
+                
                 Text("Time: \(formatTime(viewStore.currentTime)) / \(formatTime(viewStore.duration))")
 
                 HStack {

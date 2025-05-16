@@ -23,6 +23,7 @@ struct AppView: View {
             }
             .onAppear {
                 viewStore.send(.library(.onAppear))
+                viewStore.send(.setUpLibraryAndPlayer)
             }
         }
     }
@@ -35,9 +36,6 @@ struct AppView: View {
                     action: \.player
                 )
             )
-            .onAppear {
-                viewStore.start()
-            }
             .tag(Tab.player)
 
             DetailsView(
@@ -74,11 +72,11 @@ struct AppView: View {
     }
 }
 
-fileprivate extension ViewStore<AppFeature.State, AppFeature.Action> {
-    func start() {
-        send(.player(AudioPlayerFeature.Action.onAppear))
-    }
-}
+//fileprivate extension ViewStore<AppFeature.State, AppFeature.Action> {
+//    func start() {
+//        send(.player(AudioPlayerFeature.Action.onAppear))
+//    }
+//}
 
 //TODO: CustomView
 extension AppView{
