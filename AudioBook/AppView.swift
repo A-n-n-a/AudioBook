@@ -77,13 +77,6 @@ struct AppView: View {
     }
 }
 
-//fileprivate extension ViewStore<AppFeature.State, AppFeature.Action> {
-//    func start() {
-//        send(.player(AudioPlayerFeature.Action.onAppear))
-//    }
-//}
-
-//TODO: CustomView
 extension AppView{
     func CustomTabItem(imageName: String,  isActive: Bool) -> some View{
         HStack {
