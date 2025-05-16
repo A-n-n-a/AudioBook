@@ -43,7 +43,6 @@ public struct AudioPlayerFeature: Reducer {
         case backwardTapped
         case nextTapped(Chapter?)
         case previousTapped(Chapter?)
-        case audioFinished
         case changeRate(Float)
         case updateBookData(Book?)
         case rewindToTime(TimeInterval)
@@ -83,10 +82,6 @@ public struct AudioPlayerFeature: Reducer {
             
         case .backwardTapped:
             environment.audioPlayerService.seek(by: -5)
-            return .none
-            
-        case .audioFinished:
-            state.isPlaying = false
             return .none
             
         case .nextTapped(let chapter):

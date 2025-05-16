@@ -8,7 +8,6 @@
 
 import Foundation
 import AVFoundation
-import Combine
 
 public protocol AudioPlayerServiceProtocol {
     func play()
@@ -21,12 +20,9 @@ public protocol AudioPlayerServiceProtocol {
     func switchToChapter(_ chapter: Chapter, play: Bool)
 }
 
-public class AudioPlayerService: AudioPlayerServiceProtocol {
+public class AudioPlayerService: NSObject, AudioPlayerServiceProtocol {
     private var player: AVAudioPlayer?
-    private var timerSubject = PassthroughSubject<TimeInterval, Never>()
     private var timer: Timer?
-
-    init() {}
 
     public func play() {
         player?.play()
@@ -85,7 +81,14 @@ public class AudioPlayerService: AudioPlayerServiceProtocol {
             let url = Bundle.main.url(forResource: chapter.fileName, withExtension: chapter.fileExtension),
             let player = try? AVAudioPlayer(contentsOf: url) {
             self.player = player
+            self.player?.delegate = self
             self.player?.enableRate = true
         }
+    }
+}
+
+extension AudioPlayerService: AVAudioPlayerDelegate {
+    public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        appStore.send(.nextChapterTapped)
     }
 }
