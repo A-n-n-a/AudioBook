@@ -16,7 +16,7 @@ struct AudioPlayerView: View {
     var body: some View {
         WithViewStore(self.store, observe: { $0 }, removeDuplicates: ==) { viewStore in
             ZStack {
-                Color(red: 254/255, green: 249/255, blue: 244/255)
+                Color.lightBeige
                     .ignoresSafeArea()
                 
                 

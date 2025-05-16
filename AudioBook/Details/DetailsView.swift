@@ -16,11 +16,13 @@ struct DetailsView: View {
         WithViewStore(self.store, observe: { $0 }, removeDuplicates: ==) { viewStore in
             
             VStack {
-                HTMLTextView(htmlContent: viewStore.chapterDescription ?? "No Available Description")
+                HTMLTextView(htmlContent: String(viewStore.chapterDescription ?? "No Available Description"))
+                    .id(viewStore.chapterDescription ?? "No Available Description")
                     .padding(.horizontal)
                 Spacer()
             }
             .padding()
+            .background(Color.lightBeige)
         }
     }
 }

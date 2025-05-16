@@ -15,7 +15,7 @@ struct HTMLTextView: UIViewRepresentable {
         textView.isEditable = false
         textView.isScrollEnabled = true
         textView.showsVerticalScrollIndicator = false
-        textView.backgroundColor = .clear
+        textView.backgroundColor = UIColor(red: 254/255, green: 249/255, blue: 244/255, alpha: 1)
         textView.textContainerInset = UIEdgeInsets(top: 60, left: 0, bottom: 40, right: 0)
         return textView
     }

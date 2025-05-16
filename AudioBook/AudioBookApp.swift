@@ -16,6 +16,10 @@ let appStore: StoreOf<AppFeature> = .init(
 @main
 struct AudioBookApp: App {
     
+    init() {
+            UITabBar.appearance().isHidden = true
+        }
+    
     var body: some Scene {
         WindowGroup {
             AppView(
