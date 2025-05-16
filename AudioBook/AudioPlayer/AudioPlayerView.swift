@@ -27,11 +27,7 @@ struct AudioPlayerView: View {
                         .frame(width: 200, height: 300)
                         .cornerRadius(5)
                     
-                    Text("KEY POINT \(viewStore.chapterNumber) OF \(viewStore.numberOfChapters)")
-                        .foregroundColor(.gray)
-                    
-                    Text(viewStore.currentChapter?.title ?? "")
-                        .multilineTextAlignment(.center)
+                    infoLabels(viewStore: viewStore)
                     
                     Text("Time: \(formatTime(viewStore.currentTime)) / \(formatTime(viewStore.duration))")
                     
@@ -42,6 +38,22 @@ struct AudioPlayerView: View {
                 }
             }
         }
+    }
+    
+    private func infoLabels(viewStore: ViewStore<AudioPlayerFeature.State, AudioPlayerFeature.Action>) -> some View {
+        VStack(spacing: 5) {
+            
+            Text("KEY POINT \(viewStore.chapterNumber) OF \(viewStore.numberOfChapters)")
+                .foregroundColor(.gray)
+            
+            VStack(alignment: .center, spacing: 0) {
+                Text(viewStore.currentChapter?.title ?? "")
+                    .multilineTextAlignment(.center)
+                Spacer() // Pushes text to the top
+            }
+            .frame(height: 60)
+        }
+        .padding(.horizontal, 20)
     }
     
     private func playerControls(viewStore: ViewStore<AudioPlayerFeature.State, AudioPlayerFeature.Action>) -> some View {
