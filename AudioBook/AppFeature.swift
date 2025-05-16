@@ -19,6 +19,8 @@ public struct AppFeature: Reducer {
         var libraryState: LibraryFeature.State
         var audioPlayerState: AudioPlayerFeature.State
         var detailsState: DetailsFeature.State
+        
+        @PresentationState var alert: AlertState<Action>?
 
         static let initial: Self = .init(
             libraryState: LibraryFeature.State(),
@@ -36,18 +38,22 @@ public struct AppFeature: Reducer {
         case setUpFirstBook
         case nextChapterTapped
         case previousChapterTapped
+        case errorDidOccur(String)
+        case alert(PresentationAction<Action>)
     }
 
     //MARK: - Reducer
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
+                
             case .setUpFirstBook:
                 let book = state.libraryState.currentBook
                 return .concatenate(
                     .send(.player(.setFirstBookToPlayer(book))),
                     .send(.details(.updateChapterDescription(book?.chapters.first)))
                     )
+                
             case .previousChapterTapped:
                 let previousChapter = state.libraryState.previousChapter
                 if
@@ -66,6 +72,7 @@ public struct AppFeature: Reducer {
                         .send(.details(.updateChapterDescription(previousChapter)))
                     )
                 }
+                
             case .nextChapterTapped:
                 let nextChapter = state.libraryState.nextChapter
                 if
@@ -84,10 +91,24 @@ public struct AppFeature: Reducer {
                         .send(.details(.updateChapterDescription(nextChapter)))
                     )
                 }
+                
+            case .errorDidOccur(let errorText):
+                state.alert = AlertState {
+                        TextState("Error!")
+                    } actions: {
+                        ButtonState {
+                            TextState("OK")
+                        }
+                    } message: {
+                        TextState(errorText)
+                    }
+                return .none
+                
             default:
                 return .none
             }
         }
+        .ifLet(\.$alert, action: \.alert)
         
         Scope(
             state: \.audioPlayerState,

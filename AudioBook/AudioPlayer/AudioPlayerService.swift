@@ -5,7 +5,6 @@
 //  Created by Anna on 5/13/25.
 //
 
-
 import Foundation
 import AVFoundation
 
@@ -90,5 +89,9 @@ public class AudioPlayerService: NSObject, AudioPlayerServiceProtocol {
 extension AudioPlayerService: AVAudioPlayerDelegate {
     public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         appStore.send(.nextChapterTapped)
+    }
+    
+    public func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: (any Error)?) {
+        appStore.send(.errorDidOccur(error?.localizedDescription ?? "Something went wrong. Try again later"))
     }
 }

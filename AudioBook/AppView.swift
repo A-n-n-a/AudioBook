@@ -25,6 +25,7 @@ struct AppView: View {
                 viewStore.send(.library(.onAppear))
                 viewStore.send(.setUpFirstBook)
             }
+            .alert(store: store.scope(state: \.$alert, action: \.alert))
         }
     }
     
