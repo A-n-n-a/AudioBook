@@ -11,6 +11,7 @@ public struct AppFeature: Reducer {
     
     private let audioPlayerFeature = AudioPlayerFeature()
     private let libraryFeature = LibraryFeature()
+    private let detailsFeature = DetailsFeature()
     
     //MARK: - State
     public struct State: Equatable {
@@ -22,7 +23,7 @@ public struct AppFeature: Reducer {
         static let initial: Self = .init(
             libraryState: LibraryFeature.State(),
             audioPlayerState: AudioPlayerFeature.State(),
-            detailsState: DetailsFeature.State(text: "Lorem Ipsum...")
+            detailsState: DetailsFeature.State()
         )
     }
 
@@ -32,7 +33,7 @@ public struct AppFeature: Reducer {
         case library(LibraryFeature.Action)
         case player(AudioPlayerFeature.Action)
         case details(DetailsFeature.Action)
-        case setUpLibraryAndPlayer
+        case setUpFirstBook
         case nextChapterTapped
         case previousChapterTapped
     }
@@ -41,9 +42,12 @@ public struct AppFeature: Reducer {
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .setUpLibraryAndPlayer:
+            case .setUpFirstBook:
                 let book = state.libraryState.currentBook
-                return .send(.player(.setFirstBookToPlayer(book)))
+                return .concatenate(
+                    .send(.player(.setFirstBookToPlayer(book))),
+                    .send(.details(.updateChapterDescription(book?.chapters.first)))
+                    )
             case .previousChapterTapped:
                 let previousChapter = state.libraryState.previousChapter
                 if
@@ -52,12 +56,14 @@ public struct AppFeature: Reducer {
                     return .concatenate(
                         .send(.library(.selectPrevious)),
                         .send(.player(.previousTapped(previousChapter))),
-                        .send(.player(.updateBookData(previousBook)))
+                        .send(.player(.updateBookData(previousBook))),
+                        .send(.details(.updateChapterDescription(previousChapter)))
                     )
                 } else {
                     return .concatenate(
                         .send(.library(.selectPrevious)),
-                        .send(.player(.previousTapped(previousChapter)))
+                        .send(.player(.previousTapped(previousChapter))),
+                        .send(.details(.updateChapterDescription(previousChapter)))
                     )
                 }
             case .nextChapterTapped:
@@ -68,12 +74,14 @@ public struct AppFeature: Reducer {
                     return .concatenate(
                         .send(.library(.selectNext)),
                         .send(.player(.nextTapped(nextChapter))),
-                        .send(.player(.updateBookData(nextBook)))
+                        .send(.player(.updateBookData(nextBook))),
+                        .send(.details(.updateChapterDescription(nextChapter)))
                     )
                 } else {
                     return .concatenate(
                         .send(.library(.selectNext)),
-                        .send(.player(.nextTapped(nextChapter)))
+                        .send(.player(.nextTapped(nextChapter))),
+                        .send(.details(.updateChapterDescription(nextChapter)))
                     )
                 }
             default:
@@ -93,6 +101,13 @@ public struct AppFeature: Reducer {
             action: \.library
         ) {
             libraryFeature
+        }
+        
+        Scope(
+            state: \.detailsState,
+            action: \.details
+        ) {
+            detailsFeature
         }
     }
 }

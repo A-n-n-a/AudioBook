@@ -23,7 +23,7 @@ struct AppView: View {
             }
             .onAppear {
                 viewStore.send(.library(.onAppear))
-                viewStore.send(.setUpLibraryAndPlayer)
+                viewStore.send(.setUpFirstBook)
             }
         }
     }

@@ -177,23 +177,24 @@ extension LibraryFeature {
                     fileName: "autumnleaves_01_abbot_64kb",
                     fileExtension: "mp3",
                     description: """
+                    <div style="font-size: 18px; line-height: 1.6; font-family: Arial, sans-serif;">
                     <h2>📖 Chapter 1 – “Christmas Revived”</h2>
                     <p>
                       In this opening tale, we follow <strong>Nathan Stoddard</strong>, a young saddler, as he walks through the quiet streets of a New England town on Christmas morning.
                       His routine is interrupted when he notices an unusual old man, dressed in black with flowing white hair, knocking on the door of the local church.
                     </p>
-
+                
                     <p>
                       To Nathan's astonishment, the door opens, and the man enters. Curious, Nathan peeks inside and discovers a lively gathering of young people in old-fashioned attire,
                       joyfully decorating the church for a celebration. This unexpected scene fills Nathan with a sense of wonder and reflection, capturing the nostalgic and communal spirit of Christmas.
                       (<a href="https://www.gutenberg.org/ebooks/17189" target="_blank">gutenberg.org</a>)
                     </p>
-
+                
                     <p>
                       The story blends elements of mystery and sentimentality, evoking a longing for the warmth and togetherness of traditional holiday celebrations.
                       It sets the tone for the rest of the collection, which explores themes of nostalgia, community, and the simple joys of life.
                     </p>
-
+                
                     <p>
                       This chapter serves as a gentle reminder of the enduring magic of Christmas and the importance of community and tradition.
                     </p>
@@ -204,23 +205,24 @@ extension LibraryFeature {
                     fileName: "autumnleaves_02_abbot_64kb",
                     fileExtension: "mp3",
                     description: """
+                    <div style="font-size: 18px; line-height: 1.6; font-family: Arial, sans-serif;">
                     <h2>📖 Chapter 2 – “In the Churchyard at Cambridge: A Legend of Lady Lee”</h2>
-
+                
                     <p>
                       This brief yet evocative piece, titled <em>“In the Churchyard at Cambridge: A Legend of Lady Lee”</em>, transports readers to a serene churchyard in Cambridge. 
                       The narrative unfolds as a legend, recounting the tale of Lady Lee, a figure enveloped in mystery and reverence. 
                       Through poetic prose, the story delves into themes of love, loss, and the enduring nature of memory.
                     </p>
-
+                
                     <p>
                       The churchyard setting serves as a poignant backdrop, symbolizing the intersection of life and death, past and present. 
                       Lady Lee's story, though succinctly told, resonates with emotional depth, inviting readers to reflect on the legacies we leave behind and the stories that outlive us.
                     </p>
-
+                
                     <p>
                       This chapter exemplifies the collection's overarching themes of nostalgia and introspection, offering a contemplative pause that encourages readers to ponder the transient yet impactful nature of human existence.
                     </p>
-
+                
                     <p>
                       For those interested in exploring the full text, it is available through <a href="https://www.gutenberg.org/ebooks/17189" target="_blank">Project Gutenberg</a>.
                     </p>
@@ -231,6 +233,7 @@ extension LibraryFeature {
                     fileName: "autumnleaves_03_abbot_64kb",
                     fileExtension: "mp3",
                     description: """
+                    <div style="font-size: 18px; line-height: 1.6; font-family: Arial, sans-serif;">
                     <h2>📖 Chapter 3 – “The Little South-Wind”</h2>
 
                     <p>
@@ -268,6 +271,7 @@ extension LibraryFeature {
                     fileName: "undertheguns_01_wittenmyer_64kb",
                     fileExtension: "mp3",
                     description: """
+                    <div style="font-size: 18px; line-height: 1.6; font-family: Arial, sans-serif;">
                     <h2>📖 Section 1 – “A Boy Sent by Express C.O.D.”</h2>
 
                     <p>
@@ -296,6 +300,7 @@ extension LibraryFeature {
                     fileName: "undertheguns_02_wittenmyer_64kb",
                     fileExtension: "mp3",
                     description: """
+                <div style="font-size: 18px; line-height: 1.6; font-family: Arial, sans-serif;">
                 <h2>📖 Section 2 – “A Perilous Ride”</h2>
 
                 <p>
@@ -323,6 +328,7 @@ extension LibraryFeature {
                     fileName: "undertheguns_03_wittenmyer_64kb",
                     fileExtension: "mp3",
                     description: """
+                <div style="font-size: 18px; line-height: 1.6; font-family: Arial, sans-serif;">
                 <h2>📖 Section 3 – “A Woman's Reminiscences of the Civil War”</h2>
 
                 <p>
@@ -351,6 +357,7 @@ extension LibraryFeature {
                     fileName: "undertheguns_04_wittenmyer_64kb",
                     fileExtension: "mp3",
                     description: """
+                <div style="font-size: 18px; line-height: 1.6; font-family: Arial, sans-serif;">
                 <h2>📖 Section 4 – “A Woman Wounded in Battle”</h2>
 
                 <p>
