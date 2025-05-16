@@ -64,11 +64,15 @@ struct AppView: View {
                 }
             }
             .padding(6)
-            .padding(.horizontal, 12)
+            .padding(.horizontal, 2)
         }
-        .frame(height: 70)
-        .background(.yellow)
-        .cornerRadius(35)
+        .frame(height: 60)
+        .background(.white)
+        .cornerRadius(30)
+        .overlay(
+                RoundedRectangle(cornerRadius: 30)
+                    .stroke(Color.gray.opacity(0.3), lineWidth: 0.5)
+            )
     }
 }
 
@@ -81,17 +85,18 @@ struct AppView: View {
 //TODO: CustomView
 extension AppView{
     func CustomTabItem(imageName: String,  isActive: Bool) -> some View{
-        HStack(spacing: 10){
+        HStack {
             Spacer()
             Image(systemName: imageName)
                 .resizable()
                 .scaledToFit()
+                .foregroundColor(isActive ? .white: .black)
                 .frame(width: 24, height: 24)
             Spacer()
         }
-        .frame(width: 65, height: 50)
-        .background(isActive ? .green: .clear)
-        .cornerRadius(30)
+        .frame(width: 50, height: 50)
+        .background(isActive ? .blue: .clear)
+        .cornerRadius(25)
     }
 }
 
