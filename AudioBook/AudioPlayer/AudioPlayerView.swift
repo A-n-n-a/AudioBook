@@ -11,6 +11,8 @@ import ComposableArchitecture
 
 struct AudioPlayerView: View {
     let store: StoreOf<AudioPlayerFeature>
+    
+    @State var selectedSpeed: Float = 1
 
     var body: some View {
         WithViewStore(self.store, observe: { $0 }, removeDuplicates: ==) { viewStore in
@@ -30,6 +32,8 @@ struct AudioPlayerView: View {
                     infoLabels(viewStore: viewStore)
                     
                     progressView(viewStore: viewStore)
+                    
+                    speedButton(viewStore: viewStore)
                     
                     playerControls(viewStore: viewStore)
                 }
@@ -77,6 +81,34 @@ struct AudioPlayerView: View {
                 .frame(width: 50)
         }
         .padding(.horizontal)
+    }
+    
+    private func speedButton(viewStore: ViewStore<AudioPlayerFeature.State, AudioPlayerFeature.Action>) -> some View {
+        Menu {
+            Button("x0.5") {
+                selectedSpeed = 0.5
+                viewStore.send(.changeRate(selectedSpeed))
+            }
+            Button("x1") {
+                selectedSpeed = 1.0
+                viewStore.send(.changeRate(selectedSpeed))
+            }
+            Button("x1.5") {
+                selectedSpeed = 1.5
+                viewStore.send(.changeRate(selectedSpeed))
+            }
+            Button("x2") {
+                selectedSpeed = 2.0
+                viewStore.send(.changeRate(selectedSpeed))
+            }
+        } label: {
+            Text("Speed x\(formattedSpeed(selectedSpeed))")
+        }
+        .frame(width: 100, height: 30)
+        .background(.gray.opacity(0.3))
+        .cornerRadius(5)
+        .foregroundColor(.black)
+        .font(.body)
     }
     
     private func playerControls(viewStore: ViewStore<AudioPlayerFeature.State, AudioPlayerFeature.Action>) -> some View {
@@ -128,6 +160,14 @@ struct AudioPlayerView: View {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
         return String(format: "%02d:%02d", minutes, seconds)
+    }
+    
+    private func formattedSpeed(_ speed: Float) -> String {
+        if speed.truncatingRemainder(dividingBy: 1) == 0 {
+            return String(format: "%.0f", selectedSpeed)
+        } else {
+            return String(format: "%.1f", selectedSpeed)
+        }
     }
 }
 
