@@ -54,7 +54,7 @@ struct AudioPlayerView: View {
                     .multilineTextAlignment(.center)
                 Spacer()
             }
-            .frame(height: 60)
+            .frame(height: 80)
         }
         .padding(.horizontal)
     }
@@ -63,7 +63,7 @@ struct AudioPlayerView: View {
         HStack(spacing: 8) {
             Text(formatTime(viewStore.currentTime))
                 .foregroundColor(.gray)
-                .font(.body)
+                .font(.caption2)
                 .frame(width: 50)
             
             AudioProgressView(
@@ -76,7 +76,7 @@ struct AudioPlayerView: View {
 
             Text(formatTime(viewStore.duration))
                 .foregroundColor(.gray)
-                .font(.body)
+                .font(.caption2)
                 .frame(width: 50)
         }
         .padding(.horizontal)
@@ -87,18 +87,22 @@ struct AudioPlayerView: View {
             Button("x0.5") {
                 selectedSpeed = 0.5
                 viewStore.send(.changeRate(selectedSpeed))
+                triggerHapticFeedback()
             }
             Button("x1") {
                 selectedSpeed = 1.0
                 viewStore.send(.changeRate(selectedSpeed))
+                triggerHapticFeedback()
             }
             Button("x1.5") {
                 selectedSpeed = 1.5
                 viewStore.send(.changeRate(selectedSpeed))
+                triggerHapticFeedback()
             }
             Button("x2") {
                 selectedSpeed = 2.0
                 viewStore.send(.changeRate(selectedSpeed))
+                triggerHapticFeedback()
             }
         } label: {
             Text("Speed x\(formattedSpeed(selectedSpeed))")
@@ -115,6 +119,7 @@ struct AudioPlayerView: View {
             
             Button {
                 appStore.send(.previousChapterTapped)
+                triggerHapticFeedback()
             } label: {
                 Image(systemName: "backward.end.fill")
                     .font(.title)
@@ -122,6 +127,7 @@ struct AudioPlayerView: View {
 
             Button {
                 viewStore.send(.backwardTapped)
+                triggerHapticFeedback()
             } label: {
                 Image(systemName: "5.arrow.trianglehead.counterclockwise")
                     .font(.title)
@@ -129,6 +135,7 @@ struct AudioPlayerView: View {
 
             Button {
                 viewStore.send(.playPauseTapped)
+                triggerHapticFeedback()
             } label: {
                 (viewStore.isPlaying
                     ? Image(systemName: "pause.fill")
@@ -139,6 +146,7 @@ struct AudioPlayerView: View {
 
             Button {
                 viewStore.send(.forwardTapped)
+                triggerHapticFeedback()
             } label: {
                 Image(systemName: "10.arrow.trianglehead.clockwise")
                     .font(.title)
@@ -146,6 +154,7 @@ struct AudioPlayerView: View {
 
             Button {
                 appStore.send(.nextChapterTapped)
+                triggerHapticFeedback()
             } label: {
                 Image(systemName: "forward.end.fill")
                     .font(.title)
