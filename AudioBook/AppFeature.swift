@@ -53,7 +53,7 @@ public struct AppFeature: Reducer {
                     return .concatenate(
                         .send(.library(.selectPrevious)),
                         .send(.player(.previousTapped(previousChapter))),
-                        .send(.player(.updateBookImage(previousBook.imageName)))
+                        .send(.player(.updateBookData(previousBook)))
                     )
                 } else {
                     return .concatenate(
@@ -70,7 +70,7 @@ public struct AppFeature: Reducer {
                     return .concatenate(
                         .send(.library(.selectNext)),
                         .send(.player(.nextTapped(nextChapter))),
-                        .send(.player(.updateBookImage(nextBook.imageName)))
+                        .send(.player(.updateBookData(nextBook)))
                     )
                 } else {
                     return .concatenate(

@@ -21,7 +21,16 @@ public struct AudioPlayerFeature: Reducer {
         var currentTime: TimeInterval = 0
         var duration: TimeInterval = 0
         var rate: Float = 1
-        var bookImageName: String?
+        var currentBook: Book?
+        var currentChapter: Chapter?
+        
+        var numberOfChapters: Int {
+            return currentBook?.chapters.count ?? 0
+        }
+        
+        var chapterNumber: Int {
+            return (currentBook?.chapters.firstIndex(where: { $0.id ==  currentChapter?.id}) ?? 0) + 1
+        }
     }
     
     @CasePathable
@@ -36,23 +45,19 @@ public struct AudioPlayerFeature: Reducer {
         case previousTapped(Chapter?)
         case audioFinished
         case changeRate(Float)
-        case updateBookImage(String?)
+        case updateBookData(Book?)
     }
     
     public func reduce(into state: inout AudioPlayerFeature.State, action: AudioPlayerFeature.Action) -> Effect<AudioPlayerFeature.Action> {
         switch action {
         case .onAppear:
-            state.duration = environment.audioPlayerService.duration()
-            return .run { send in
-                for await time in environment.audioPlayerService.timerPublisher() {
-                    await send(.updateTime(time))
-                }
-            }
+            return setupAudioPlayerDuration(state: &state, environment: environment)
             
         case .setFirstBookToPlayer(let book):
-            state.bookImageName = book?.imageName
+            state.currentBook = book
             if let chapter = book?.chapters.first {
                 environment.audioPlayerService.switchToChapter(chapter, play: false)
+                state.currentChapter = chapter
             }
             return .none
             
@@ -86,14 +91,18 @@ public struct AudioPlayerFeature: Reducer {
         case .nextTapped(let chapter):
             if let chapter {
                 environment.audioPlayerService.switchToChapter(chapter, play: true)
+                state.currentChapter = chapter
                 state.isPlaying = true
+                return setupAudioPlayerDuration(state: &state, environment: environment)
             }
             return .none
             
         case .previousTapped(let chapter):
             if let chapter {
                 environment.audioPlayerService.switchToChapter(chapter, play: true)
+                state.currentChapter = chapter
                 state.isPlaying = true
+                return setupAudioPlayerDuration(state: &state, environment: environment)
             }
             return .none
             
@@ -102,9 +111,19 @@ public struct AudioPlayerFeature: Reducer {
             state.rate = rate
             return .none
             
-        case .updateBookImage(let imageName):
-            state.bookImageName = imageName
+        case .updateBookData(let book):
+            state.currentBook = book
             return .none
+        }
+    }
+    
+    private func setupAudioPlayerDuration(state: inout AudioPlayerFeature.State, environment: AudioPlayerEnvironment) -> Effect<AudioPlayerFeature.Action> {
+        state.duration = environment.audioPlayerService.duration()
+        
+        return .run { send in
+            for await time in environment.audioPlayerService.timerPublisher() {
+                await send(.updateTime(time))
+            }
         }
     }
 }

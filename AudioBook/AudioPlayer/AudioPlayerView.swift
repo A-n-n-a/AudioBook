@@ -17,10 +17,16 @@ struct AudioPlayerView: View {
             
             VStack(spacing: 20) {
                 
-                Image(viewStore.bookImageName ?? "placeholder")
+                Image(viewStore.currentBook?.imageName ?? "placeholder")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 100, height: 200)
+                    .frame(width: 200, height: 300)
+                
+                Text("KEY POINT \(viewStore.chapterNumber) OF \(viewStore.numberOfChapters)")
+                    .foregroundColor(.gray)
+                
+                Text(viewStore.currentChapter?.title ?? "")
+                    .multilineTextAlignment(.center)
                 
                 Text("Time: \(formatTime(viewStore.currentTime)) / \(formatTime(viewStore.duration))")
 
@@ -65,8 +71,12 @@ struct AudioPlayerView: View {
             }
         }
     }
+    
+//    private var keyPointsLabel: some View {
+//        Label("KEY POINT \(viewStore.chapterNumber) OF \(viewStore.numberOfChapters)")
+//    }
 
-    func formatTime(_ time: TimeInterval) -> String {
+    private func formatTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
         return String(format: "%02d:%02d", minutes, seconds)

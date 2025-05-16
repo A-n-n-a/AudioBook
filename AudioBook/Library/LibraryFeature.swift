@@ -178,7 +178,7 @@ extension LibraryFeature {
             chapters: [
                 Chapter(
                     id: UUID(),
-                    title: "Chapter 1",
+                    title: "Christmas Revived",
                     fileName: "autumnleaves_01_abbot_64kb",
                     fileExtension: "mp3",
                     description: """
@@ -205,7 +205,7 @@ extension LibraryFeature {
                 """),
                 Chapter(
                     id: UUID(),
-                    title: "Chapter 2",
+                    title: "In the Churchyard at Cambridge: A Legend of Lady Lee",
                     fileName: "autumnleaves_02_abbot_64kb",
                     fileExtension: "mp3",
                     description: """
@@ -230,7 +230,12 @@ extension LibraryFeature {
                       For those interested in exploring the full text, it is available through <a href="https://www.gutenberg.org/ebooks/17189" target="_blank">Project Gutenberg</a>.
                     </p>
                 """),
-                Chapter(id: UUID(), title: "Chapter 3", fileName: "autumnleaves_03_abbot_64kb", fileExtension: "mp3", description: """
+                Chapter(
+                    id: UUID(),
+                    title: "The Little South-Wind",
+                    fileName: "autumnleaves_03_abbot_64kb",
+                    fileExtension: "mp3",
+                    description: """
                     <h2>📖 Chapter 3 – “The Little South-Wind”</h2>
 
                     <p>
@@ -264,7 +269,7 @@ extension LibraryFeature {
             chapters: [
                 Chapter(
                     id: UUID(),
-                    title: "Chapter 1",
+                    title: "A Boy Sent by Express C.O.D.",
                     fileName: "undertheguns_01_wittenmyer_64kb",
                     fileExtension: "mp3",
                     description: """
@@ -292,7 +297,7 @@ extension LibraryFeature {
                 """),
                 Chapter(
                     id: UUID(),
-                    title: "Chapter 2",
+                    title: "A Perilous Ride",
                     fileName: "undertheguns_02_wittenmyer_64kb",
                     fileExtension: "mp3",
                     description: """
@@ -319,7 +324,7 @@ extension LibraryFeature {
                 """),
                 Chapter(
                     id: UUID(),
-                    title: "Chapter 3",
+                    title: "A Woman's Reminiscences of the Civil War",
                     fileName: "undertheguns_03_wittenmyer_64kb",
                     fileExtension: "mp3",
                     description: """
@@ -339,6 +344,35 @@ extension LibraryFeature {
                 <p>
                   This section sets the tone for Wittenmyer's memoir, focusing on real-life incidents and heartfelt stories rather than military history. 
                   It underscores her deep compassion for the suffering endured and her respect for those who served.
+                </p>
+
+                <p>
+                  For those interested in exploring the full text, it is available through <a href="https://www.gutenberg.org/ebooks/73190" target="_blank">Project Gutenberg</a>.
+                </p>
+                """),
+                Chapter(
+                    id: UUID(),
+                    title: "A Woman Wounded in Battle",
+                    fileName: "undertheguns_04_wittenmyer_64kb",
+                    fileExtension: "mp3",
+                    description: """
+                <h2>📖 Section 4 – “A Woman Wounded in Battle”</h2>
+
+                <p>
+                  In this compelling chapter, <em>“A Woman Wounded in Battle”</em>, Annie Wittenmyer recounts the extraordinary story of a woman who, disguised as a male soldier, fought alongside Union troops during the Civil War. 
+                  The narrative unfolds as Wittenmyer encounters this wounded soldier, only to discover the individual's true identity as a woman. 
+                  This revelation highlights the lengths to which women went to participate directly in the war effort, challenging the gender norms of the time.
+                </p>
+
+                <p>
+                  Wittenmyer's account sheds light on the courage and determination of women who defied societal expectations to serve their country. 
+                  The chapter delves into the complexities of identity, sacrifice, and the often-overlooked roles women played on the front lines. 
+                  Through this poignant story, Wittenmyer emphasizes the universal impact of war and the shared humanity of all who endured its trials.
+                </p>
+
+                <p>
+                  This section contributes to the memoir's overarching themes of resilience, compassion, and the diverse experiences of those affected by the Civil War. 
+                  It invites readers to reflect on the multifaceted nature of bravery and the untold stories of women who risked everything for their beliefs.
                 </p>
 
                 <p>
