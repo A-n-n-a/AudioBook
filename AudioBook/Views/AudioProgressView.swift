@@ -15,12 +15,12 @@ struct AudioProgressView: View {
     var body: some View {
         GeometryReader { geometry in
             let width = geometry.size.width
-            let height: CGFloat = 8
-            let thumbSize: CGFloat = 20
+            let height: CGFloat = 4
+            let thumbSize: CGFloat = 16
             
             let total = range.upperBound - range.lowerBound
             let progress = CGFloat((value - range.lowerBound) / total)
-            let xPos = (CGFloat(value) / CGFloat(range.upperBound)) * geometry.size.width
+            let xPos = max(0, progress * (width - thumbSize))
 
             ZStack(alignment: .leading) {
                 // Track
@@ -49,6 +49,6 @@ struct AudioProgressView: View {
                     )
             }
         }
-        .frame(height: 30)
+        .frame(height: 20)
     }
 }

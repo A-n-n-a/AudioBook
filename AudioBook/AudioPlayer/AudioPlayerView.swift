@@ -57,7 +57,7 @@ struct AudioPlayerView: View {
     }
     
     private func progressView(viewStore: ViewStore<AudioPlayerFeature.State, AudioPlayerFeature.Action>) -> some View {
-        HStack {
+        HStack(spacing: 8) {
             Text(formatTime(viewStore.currentTime))
                 .foregroundColor(.gray)
                 .font(.body)
@@ -70,7 +70,6 @@ struct AudioPlayerView: View {
                 ),
                 range: 0...viewStore.duration
             )
-            .padding(.horizontal)
 
             Text(formatTime(viewStore.duration))
                 .foregroundColor(.gray)
@@ -81,7 +80,7 @@ struct AudioPlayerView: View {
     }
     
     private func playerControls(viewStore: ViewStore<AudioPlayerFeature.State, AudioPlayerFeature.Action>) -> some View {
-        HStack(spacing: 20) {
+        HStack(spacing: 25) {
             
             Button {
                 appStore.send(.previousChapterTapped)
