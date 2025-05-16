@@ -29,7 +29,7 @@ struct AudioPlayerView: View {
                     
                     infoLabels(viewStore: viewStore)
                     
-                    Text("Time: \(formatTime(viewStore.currentTime)) / \(formatTime(viewStore.duration))")
+                    progressView(viewStore: viewStore)
                     
                     playerControls(viewStore: viewStore)
                 }
@@ -49,11 +49,35 @@ struct AudioPlayerView: View {
             VStack(alignment: .center, spacing: 0) {
                 Text(viewStore.currentChapter?.title ?? "")
                     .multilineTextAlignment(.center)
-                Spacer() // Pushes text to the top
+                Spacer()
             }
             .frame(height: 60)
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal)
+    }
+    
+    private func progressView(viewStore: ViewStore<AudioPlayerFeature.State, AudioPlayerFeature.Action>) -> some View {
+        HStack {
+            Text(formatTime(viewStore.currentTime))
+                .foregroundColor(.gray)
+                .font(.body)
+                .frame(width: 50)
+            
+            AudioProgressView(
+                value: viewStore.binding(
+                    get: \.currentTime,
+                    send: { newValue in AudioPlayerFeature.Action.rewindToTime(newValue) }
+                ),
+                range: 0...viewStore.duration
+            )
+            .padding(.horizontal)
+
+            Text(formatTime(viewStore.duration))
+                .foregroundColor(.gray)
+                .font(.body)
+                .frame(width: 50)
+        }
+        .padding(.horizontal)
     }
     
     private func playerControls(viewStore: ViewStore<AudioPlayerFeature.State, AudioPlayerFeature.Action>) -> some View {

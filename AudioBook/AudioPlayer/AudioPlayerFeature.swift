@@ -46,6 +46,7 @@ public struct AudioPlayerFeature: Reducer {
         case audioFinished
         case changeRate(Float)
         case updateBookData(Book?)
+        case rewindToTime(TimeInterval)
     }
     
     public func reduce(into state: inout AudioPlayerFeature.State, action: AudioPlayerFeature.Action) -> Effect<AudioPlayerFeature.Action> {
@@ -113,6 +114,11 @@ public struct AudioPlayerFeature: Reducer {
             
         case .updateBookData(let book):
             state.currentBook = book
+            return .none
+            
+        case .rewindToTime(let time):
+            state.currentTime = time
+            environment.audioPlayerService.rewind(to: time)
             return .none
         }
     }

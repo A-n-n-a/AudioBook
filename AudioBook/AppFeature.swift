@@ -46,7 +46,6 @@ public struct AppFeature: Reducer {
                 return .send(.player(.setFirstBookToPlayer(book)))
             case .previousChapterTapped:
                 let previousChapter = state.libraryState.previousChapter
-                print("[Chapter]", previousChapter?.fileName ?? "nil")
                 if
                     state.libraryState.isFirstChapterInBook,
                     let previousBook = state.libraryState.previousBook {
@@ -63,7 +62,6 @@ public struct AppFeature: Reducer {
                 }
             case .nextChapterTapped:
                 let nextChapter = state.libraryState.nextChapter
-                print("[Chapter]", nextChapter?.fileName ?? "nil")
                 if
                     state.libraryState.isLastChapterInBook,
                     let nextBook = state.libraryState.nextBook {

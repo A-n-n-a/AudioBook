@@ -14,6 +14,7 @@ public protocol AudioPlayerServiceProtocol {
     func play()
     func pause()
     func seek(by seconds: TimeInterval)
+    func rewind(to time: TimeInterval)
     func duration() -> TimeInterval
     func setRate(rate: Float)
     func timerPublisher() -> AsyncStream<TimeInterval>
@@ -39,6 +40,10 @@ public class AudioPlayerService: AudioPlayerServiceProtocol {
 
     public func seek(by seconds: TimeInterval) {
         player?.currentTime += seconds
+    }
+    
+    public func rewind(to time: TimeInterval) {
+        player?.currentTime = time
     }
 
     public func duration() -> TimeInterval {

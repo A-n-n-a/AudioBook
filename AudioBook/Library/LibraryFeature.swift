@@ -93,7 +93,6 @@ public struct LibraryFeature: Reducer {
             if isLastChapterInBook {
                 return nextBook?.chapters.first
             } else if let chapterIndex {
-                print("[Chapter index]", chapterIndex)
                 return currentBook?.chapters[safe: chapterIndex + 1]
             }
             return books.first?.chapters.first
@@ -124,14 +123,12 @@ public struct LibraryFeature: Reducer {
             state.books = Self.sampleBooks
             if state.currentBook == nil {
                 state.currentBook = state.books.first
-                print("[Current Book] 123", state.currentBook?.title ?? "nil")
                 state.currentChapter = state.currentBook?.chapters.first
             }
             return .none
 
         case let .selectBook(bookId):
             state.currentBook = state.books.first(where: { $0.id == bookId })
-            print("[Current Book] 129", state.currentBook?.title ?? "nil")
             state.currentChapter = state.currentBook?.chapters.first
             return .none
             
@@ -150,7 +147,6 @@ public struct LibraryFeature: Reducer {
     private func selectNextChapter(state: inout State) {
         if state.isLastChapterInBook {
             state.currentBook = state.nextBook
-            print("[Current Book] 148", state.currentBook?.title ?? "nil")
             state.currentChapter = state.currentBook?.chapters.first
         } else {
             state.currentChapter = state.nextChapter
@@ -160,7 +156,6 @@ public struct LibraryFeature: Reducer {
     private func selectPreviousChapter(state: inout State) {
         if state.isFirstChapterInBook {
             state.currentBook = state.previousBook
-            print("[Current Book] 158", state.currentBook?.title ?? "nil")
             state.currentChapter = state.currentBook?.chapters.first
         } else {
             state.currentChapter = state.previousChapter
